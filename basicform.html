@@ -14,10 +14,17 @@
     margin: 0%;
 }
 .wrapper{
+    /* background: url(cloud.jpeg) no-repeat center;
+    background-size:cover; */
+    height: 120vh;
+    /* background-attachment: fixed; */
+
+}
+
+body {
     background: url(cloud.jpeg) no-repeat center;
     background-size:cover;
-    height: 120vh;
-
+    background-attachment: fixed;
 }
 
 form{
@@ -191,20 +198,21 @@ font-family: serif;
 
 }
 
+/* css coding dynamic feilds */
    
    #radio{
 
-margin-left: 10%;
-display: block;
 
+    margin-left: 30%;
+    
+    padding-left: 3%;
    }
    
    #checkbox{
 
 
-    display: inline-block;
-    margin-left: 10%;
-
+    margin-left: 30%;
+   display: inline;
 
    }
    
@@ -214,7 +222,59 @@ display: block;
 font-size: 120%;
 font-family: serif;
 border-bottom: 1px   black solid;
+
 } 
+
+
+
+.typehere{
+
+
+font-size: 120%;
+font-family: serif;
+float: left;
+margin-right: 5%;
+padding-top: 3%;
+
+}
+
+
+.chkbox{
+
+margin: 0%;
+padding: 0% 1% 0% 1%;
+
+
+}
+
+.radiobtn{
+
+
+    margin: 0% ;
+    padding-left: 3%;
+   
+  
+}
+
+#selectL{
+
+padding-left: 1%;
+margin-right: 2%;
+
+display: block;
+
+}
+
+#selectf{
+
+margin-bottom: 5%;
+
+
+display:block;
+
+
+}
+
 
 
    </style>
@@ -242,22 +302,25 @@ border-bottom: 1px   black solid;
 
             <h2>basic form</h2>
             
-                <input  type="" placeholder="name" required id="name"> 
+                <input  type="" placeholder="name" required id="name" maxlength="10"> 
                 <input id="rd" type="date" placeholder="dob" required style="cursor: pointer;"> 
                 <input type="password" placeholder="password" class="password" required  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"  id="name">  
                 <input type="password" placeholder="confrim password" class="confirmpass" required  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" id="name">
                 <input type="email" placeholder="e-mail" id="name"><br>
        
-                
-                <div id="feild"></div>
+                <div id="new_field">
+                    <div id="feild"></div>
                 <div>
+                </div>
+                
 <h1 >add field
 <select name="add feild"  id="change" >
 
-    <option value="select_feild">--select feild--</option> 
+   <option value="select">--select feild--</option>
     <option value="input">input</option> 
     <option value="checkbox">checkbox</option>
     <option value="radio">radiobutton</option>
+    <option value="addbox">--add feild--</option> 
    
 
 </select><br>
@@ -265,7 +328,7 @@ border-bottom: 1px   black solid;
 <input type="button" id="text" value="add" onclick="addform(document.getElementById('change').value)"/></h1>
 
  
-                <input type="reset"  style="cursor: pointer;" value="RESET" id="re"  ><br>
+                <input type="reset"  style="cursor: pointer;" value="RESET" id="re" onclick="removefeilds()" ><br>
 
                 <button  id="rr" type="submit"  >+</button>
 
