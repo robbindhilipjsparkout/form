@@ -12,8 +12,8 @@
   
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    
-    
+   
+
 </head>
 
 
@@ -67,9 +67,11 @@
 
 
   <button type="submit" class="btn btn-info" id="sub1">Submit</button>
-  <div>
-  <span><a href="http://localhost/index.php">Show Details</span>
-  <span ><a href="http://localhost/upadate.php">update Details</span>
+  <div><br>
+  <span class="btn btn-info"><a href="http://localhost/index.php">Show Details</a></span><br><br>
+  <span class="btn btn-warning"><a href="http://localhost/upadate.php">update Details</a></span><br><br>
+  <span class="btn btn-success" ><a href="http://localhost/deletepage.php">delete data</a></span><br><br>
+  <span class="btn btn-danger" ><a href="http://localhost/auto-complete.php">auto-complete</a><span>
 </div>
  
 </form>
@@ -106,7 +108,8 @@ if($form){
     }
 ?>
 
-
+  </body>
+  </html>
 
 
 
