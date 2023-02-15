@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <style>
+
+        .container{
+            text-align: center;
+            margin-top: 4%;
+        }
+        #upload{
+            margin-top: 2%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+<form action="img.php" method="post" enctype="multipart/form-data">
+  Select image to upload:
+  <input type="file" name="upload" id="fileToUpload" required><br>
+  <input id="upload" type="submit" value="Upload Image" name="submit">
+</form>
+</div>
+
+
+
+
+<?php
+
+$con=mysqli_connect("localhost","root","","imageupload") or die('Unable to connect');
+
+if (isset($_POST['submit'])){
+
+    $image=$_FILES['upload']['tmp_name'];
+    $name=$_FILES['upload']['name'];
+
+    $image=file_get_contents($image);
+    $image=base64_encode($image);
+    $sql="INSERT INTO imagedata (image) VALUES('$image')";
+
+    if($con->query($sql))
+    {
+        echo "Image stored";
+    }
+    else{
+
+        echo "Error Occured...!!";
+    }
+   
+}
+
+?>
+
+
+
+</body>
+</html>
