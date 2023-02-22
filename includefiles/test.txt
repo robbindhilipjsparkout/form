@@ -1,0 +1,16 @@
+
+<?php
+ 
+ class person {
+
+public $name; //properties
+
+public function Functname($name) //methods
+{
+   $this->name=$name;
+}
+
+ }
+$dhilip = new person();
+
+$dhilip->Functname('robbin');
