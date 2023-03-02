@@ -12,7 +12,7 @@ $condition = $connect->query("SELECT Cal_date from events_cal WHERE Cal_date= '$
 if($condition->num_rows < 5){
     if($con = $connect->query($my_query)){
         echo "{$condition->num_rows}";
-       echo " Actions added successfully!!!";
+       echo "Actions added successfully!!!";
     }
 }
 else{

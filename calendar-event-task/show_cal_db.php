@@ -11,7 +11,7 @@ $event_array = [];
 
 if($con->num_rows > 0){
     while($row= $con->fetch_assoc()){
-        $event_array[] = [$row['Cal_date'] => $row['Event']];
+        $event_array[] = [$row['Cal_date'] , $row['Event'] ,$row['id']] ;
     }
 
 }echo json_encode($event_array);

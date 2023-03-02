@@ -1,3 +1,47 @@
+<?php
+// Get the current month and year
+$month = date('m');
+$year = date('Y');
+
+// Get the number of days in the month
+$numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
+
+// Get the day of the week on which the month starts
+$monthStart = date('N', mktime(0, 0, 0, $month, 1, $year));
+
+// Generate the calendar table
+echo "<table>";
+echo "<tr>";
+echo "<th>Monday</th>";
+echo "<th>Tuesday</th>";
+echo "<th>Wednesday</th>";
+echo "<th>Thursday</th>";
+echo "<th>Friday</th>";
+echo "<th>Saturday</th>";
+echo "<th>Sunday</th>";
+echo "</tr>";
+
+$day = 1;
+$numWeeks = ceil(($numDays + $monthStart - 1) / 7);
+for ($week = 1; $week <= $numWeeks; $week++) {
+    echo "<tr>";
+    for ($weekday = 1; $weekday <= 7; $weekday++) {
+        if ($week == 1 && $weekday < $monthStart) {
+            echo "<td></td>";
+        } else if ($day > $numDays) {
+            echo "<td></td>";
+        } else {
+            echo "<td>$day</td>";
+            $day++;
+        }
+    }
+    echo "</tr>";
+}
+echo "</table>";
+?>
+
+/////////////////
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,46 +59,37 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-    <style>
-        td:hover{
-background-color:white;
-        }
-        </style>
 </head>
+
 
 <body>
 
-<h3 class="text-center text-uppercase">Event calender</h3>
+<h3 class="text-center">Event calender</h3>
    
 <div class="col-lg-4 col-lg-offset-4">
 
+
+<h3 class="text-center">March 2023</h3>
    
 <!-- php code for normal calendar -->
 
-        <?php
+<?php
 
-        // Get the current year and month
-        $year = date('Y');
-        $month = date('m');
+// Get the current month and year
+$month = date('m');
+$year = date('Y');
 
-        // Get the number of days in the month
-        $numDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+// Get the number of days in the month
+$numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
 
-        // Get the name of the current month
-        $monthName = date('F', mktime(0, 0, 0, $month, 1, $year));
+// Get the day of the week on which the month starts
+$monthStart = date('N', mktime(0, 0, 0, $month, 1, $year));
 
-        // Get the day of the week of the first day of the current month
-        $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
-
-        echo "<h4 class='text-center text-uppercase'>$monthName $year</h4>";
-
-       // Generate the calendar table
-       
-echo "<table class='table table-bordered  table-borderless'  style='border:1px blue solid ; 
-border-radius: 20px;  background-color: #6AFDFD;'>";
-
-echo "<tr class='bg-info text-center text-uppercase'>";
+// Generate the calendar table
+echo "<table class='table table-bordered table-hover table-borderless'  style='border:1px blue solid ; 
+       border-radius: 20px;  background-color: #6AFDFD;'>";
+   
+echo "<tr>";
 echo "<th>Monday</th>";
 echo "<th>Tuesday</th>";
 echo "<th>Wednesday</th>";
@@ -64,47 +99,44 @@ echo "<th>Saturday</th>";
 echo "<th>Sunday</th>";
 echo "</tr>";
 
-        // Print the calendar body
-
-        echo "<tr>";
-        for ($i = 1; $i < $firstDayOfWeek; $i++) {
-            echo "<td ></td>";
-        }
-        for ($i = 1; $i <= $numDays; $i++) {
-            echo "<td style='cursor:cell;'><span style='cursor: pointer;'>$i</span><div id='i$i'></div></td>";
-            if (($i + $firstDayOfWeek - 1) % 7 == 0) {
-                echo "</tr><tr>";
-            }
-        }
-        for ($i = ($firstDayOfWeek + $numDays - 1) % 7; $i < 7; $i++) {
+$day = 1;
+$numWeeks = ceil(($numDays + $monthStart - 1) / 7);
+for ($week = 1; $week <= $numWeeks; $week++) {
+    echo "<tr>";
+    for ($weekday = 1; $weekday <= 7; $weekday++) {
+        if ($week == 1 && $weekday < $monthStart) {
             echo "<td></td>";
+        } else if ($day > $numDays) {
+            echo "<td></td>";
+        } else {
+            echo "<td><span>$day</span><div id='i$day'></div></td>";
+            $day++;
         }
-        echo "</tr>";
+    }
+    echo "</tr>";
+}
+echo "</table>";
 
-        echo "</table>";
+?>
 
-        ?>
-    
-</div>
+
+
+</div>   
 </body>
 </html>
 
+<!-- ajax script -->
+
 <script>
-
-    //ajax script
-
     $(document).ready(function () {
-
-        //insert_data
-
         $("td span").click(function () {
-            let action = prompt("Enter events");
+            let event1 = prompt("Enter events");
             let date = this.innerText;
-            if (action != null && action != "" && action != undefined) {
+            if (event1 != null && event1 != "" && event1 != undefined) {
                 $.ajax({
                     type: "post",
                     url: "insert_cal_db.php",
-                    data: { event: action, date: date },
+                    data: { event: event1, date: date },
                     dataType: "text",
                     success: function (response) {
                         alert(response);
@@ -121,17 +153,15 @@ echo "</tr>";
 
         updates();
 
-        //Delete_data
-
         $(document).on('click', '.event', function () {
 
             var del = $(this).attr('id');
 
-            var remove = confirm("Want to delete this action?");
+            var agree = confirm("Do you wanna delete this event?");
 
-            console.log(remove);
+            console.log(agree);
 
-            if (remove) {
+            if (agree) {
                 $.ajax({
                     type: "post",
                     url: "del_cal_db.php",
@@ -139,7 +169,7 @@ echo "</tr>";
                     dataType: "text",
                     success: function (response) {
                         alert(response);
-                       updates();
+                        updates();
                     }
 
                 });
@@ -151,8 +181,6 @@ echo "</tr>";
 
     });
 
-    //show_data
-
     function updates() {
 
         $.ajax({
@@ -160,12 +188,8 @@ echo "</tr>";
             url: "show_cal_db.php",
             dataType: "json",
             success: function (data) {
-
-                $(".event").empty();
-
-                for (let num = 0; num < data.length; num++)
-                 {
-                    $("#i" + data[num][0]).append(`<p class='bg-info text-center text-uppercase rounded event' id="${data[num][2]}">${data[num][1]}</p>`);
+                for (let num = 0; num < data.length; num++) {
+                    $("#i" + data[num][0]).html(`<p class='bg-primary text-light rounded event' id="${data[num][2]}">${data[num][1]}</p>`);
 
                 }
             }
